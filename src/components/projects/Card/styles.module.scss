@@ -1,0 +1,32 @@
+.container {
+  width: 315px;
+  height: 165px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  & > a {
+    text-decoration: none;
+    
+    & > button {
+      width: 300px;
+      height: 150px;
+      border-radius: 8px;
+      background-color: rgb(22, 21, 21);
+      display: flex;
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.2s;
+  
+      &:hover {
+        width: 315px;
+        height: 165px;
+        cursor: pointer;
+      }
+    }
+  }
+}

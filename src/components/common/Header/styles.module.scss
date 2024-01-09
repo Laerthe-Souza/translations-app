@@ -1,0 +1,45 @@
+.container {
+  background-color: rgb(22, 21, 21);
+  display: flex;
+  padding: 20px;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+
+  img {
+    border-radius: 50%;
+    margin-left: 20px;
+  }
+
+  & > div {
+    display: flex;
+    align-items: center;
+  }
+
+  & > div > div {
+    text-align: right;
+  }
+}
+
+.profile {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgb(92, 92, 175);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20px;
+
+  & > p {
+    font-weight: 700;
+  }
+
+  & > strong {
+    color: rgb(202, 72, 72);
+  }
+
+  &:hover {
+    background-color: white;
+  }
+}

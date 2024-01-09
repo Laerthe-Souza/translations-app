@@ -1,0 +1,54 @@
+.container {
+  padding: 20px;
+  border-radius: 8px;
+  background-color: rgb(22, 21, 21);
+
+  & > hr {
+    margin: 5px 0 20px;
+  }
+
+  & > a > button {
+    margin-top: 40px;
+  }
+
+  & > div:nth-child(1) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.translationsInfo {
+  & + .translationsInfo {
+    margin-top: 15px;
+  }
+
+  & > p {
+    font-size: 14px;
+  }
+
+  & > div {
+    margin-top: 2px;
+    position: relative;
+    background-color: white;
+    font-size: 12px;
+    height: 25px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & > span {
+      color: black;
+      z-index: 10;
+    }
+
+    & > div {
+      position: absolute;
+      border-radius: 8px;
+      left: 0;
+      height: 100%;
+      background-color: rgb(119, 236, 119);
+    }
+  }
+}

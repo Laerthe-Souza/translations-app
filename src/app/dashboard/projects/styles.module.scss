@@ -1,0 +1,19 @@
+.container {
+  & > div:nth-child(1) {
+    display: flex;
+    justify-content: space-between;
+
+    & button {
+      width: 220px;
+    }
+  }
+  
+  & > hr {
+    margin: 8px 0 20px 0;
+  }
+}
+
+.projects {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
