@@ -8,6 +8,7 @@ import { Button } from "@/components/common/Button";
 import { Input } from "@/components/common/Input";
 import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
+import { toast } from "react-toastify";
 
 type IFormValues = z.output<typeof formValuesSchema>;
 
@@ -25,7 +26,11 @@ export default function SignUp() {
   });
 
   const handleSignIn: SubmitHandler<IFormValues> = async values => {
-    await signUp(values);
+    try {
+      await signUp(values); 
+    } catch (error) {
+      toast.error('Erro ao fazer cadastro')
+    } 
   }
 
   return (
