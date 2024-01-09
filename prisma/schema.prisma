@@ -1,0 +1,115 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  owner
+  admin
+  translator
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  teams UsersOnTeams[]
+
+  @@map("users")
+}
+
+model Team {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  users    UsersOnTeams[]
+  projects Project[]
+
+  @@map("teams")
+}
+
+model UsersOnTeams {
+  id     String @id @default(uuid())
+  role   Role
+  userId String @map("user_id")
+  teamId String @map("team_id")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  team Team @relation(fields: [teamId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@unique([userId, teamId])
+  @@map("users_on_teams")
+}
+
+model Project {
+  id        String   @id @default(uuid())
+  name      String
+  teamId    String   @map("team_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  team Team @relation(fields: [teamId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  languages  Language[]
+  namespaces Namespace[]
+
+  @@unique([name, teamId])
+  @@map("projects")
+}
+
+model Language {
+  id        String   @id @default(uuid())
+  title     String
+  code      String
+  projectId String   @map("project_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  words Word[]
+
+  @@unique([code, projectId])
+  @@map("languages")
+}
+
+model Namespace {
+  id        String   @id @default(uuid())
+  name      String
+  projectId String   @map("project_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  words Word[]
+
+  @@unique([name, projectId])
+  @@map("namespaces")
+}
+
+model Word {
+  id          String   @id @default(uuid())
+  key         String
+  content     String   @db.LongText()
+  namespaceId String   @map("namespace_id")
+  languageId  String   @map("language_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @default(now()) @updatedAt @map("updated_at")
+
+  namespace Namespace @relation(fields: [namespaceId], references: [id])
+  language  Language  @relation(fields: [languageId], references: [id])
+
+  @@unique([languageId, key, namespaceId])
+  @@map("words")
+}
