@@ -6,7 +6,7 @@ import { z } from "zod";
 import styles from './styles.module.scss';
 import { Button } from "@/components/common/Button";
 import { Input } from "@/components/common/Input";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import { useAuth } from "@/hooks/useAuth";
 import Link from "next/link";
 
@@ -24,7 +24,11 @@ export default function SignIn() {
   });
 
   const handleSignIn: SubmitHandler<IFormValues> = async values => {
-      await signIn(values);  
+      try {
+        await signIn(values); 
+      } catch (error) {
+        toast.error('Erro ao fazer login')
+      } 
   }
 
   return (
